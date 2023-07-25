@@ -13,9 +13,15 @@ public class Main {
         try {
             // Reading Questions from File
             Scanner sc = new Scanner(new File("Questions.txt"));
+
+            // Line index for debug purposes
+            int line = 1;
+
+            // Populating list
             while (sc.hasNextLine()) {
                 String[] input = sc.nextLine().split(":");
-                questionList.add(new Question(input));
+                questionList.add(new Question(input, line));
+                line++;
             }
             sc.close();
             new Quizmaster(questionList); // Starting
