@@ -18,9 +18,13 @@ public class Quizmaster {
      * 
      * @param questions | List of all Questions
      */
-    public Quizmaster(ArrayList<Question> questions) {
+    public Quizmaster(ArrayList<Question> questions, Boolean gui) {
         questionList = questions;
-        ask();
+        if (gui){
+            new View(this);
+        }else{
+            ask();
+        }
     }
 
     /**

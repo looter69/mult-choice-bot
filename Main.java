@@ -8,6 +8,7 @@ import java.util.Scanner;
  */
 public class Main {
     static ArrayList<Question> questionList = new ArrayList<Question>(); // Storing all Questions here
+    private static Boolean useGui = true;
 
     public static void main(String[] args) {
         try {
@@ -24,7 +25,7 @@ public class Main {
                 line++;
             }
             sc.close();
-            new Quizmaster(questionList); // Starting
+            new Quizmaster(questionList, useGui); // Starting
         } catch (FileNotFoundException e) {
             System.err.println("Error loading File!");
         }
