@@ -10,6 +10,7 @@ import java.util.Scanner;
  */
 public class Quizmaster {
     private static int streak = 0;
+    private static int highscore = 0;
     private static ArrayList<Question> questionList; // Pot of all Questions
     private Scanner scanner = new Scanner(System.in);
 
@@ -20,9 +21,9 @@ public class Quizmaster {
      */
     public Quizmaster(ArrayList<Question> questions, Boolean gui) {
         questionList = questions;
-        if (gui){
+        if (gui) {
             new View(this);
-        }else{
+        } else {
             ask();
         }
     }
@@ -31,12 +32,9 @@ public class Quizmaster {
      * Method that poses a random question and checks the user's answer
      */
     public void ask() {
-        // Checking if the questionList contains something
-        if (!questionList.isEmpty()) {
-            // Drawing random question from the questionList
-            Collections.shuffle(questionList);
-            Question q = questionList.get(0);
+        Question q = getRandomQuestion();
 
+        if (q != null) {
             // Randomizing order of choices
             // q.shuffleChoices();
 
@@ -52,20 +50,43 @@ public class Quizmaster {
 
             // Handling input
             if (!answer.equals("0")) {
-                if (q.isCorrectAnswer(answer)) {
-                    correct(q);
+                if (validateInput(q, answer)) {
+                    System.out.println("Correct! Current streak: " + streak);
                 } else {
-                    incorrect(q);
+                    System.out.println("Not Correct. The correct answer(s) is/are: " + "\n");
+                    if (q.getCorrectAnswers().contains("1"))
+                        System.out.println(q.getChoices()[0]);
+                    if (q.getCorrectAnswers().contains("2"))
+                        System.out.println(q.getChoices()[1]);
+                    if (q.getCorrectAnswers().contains("3"))
+                        System.out.println(q.getChoices()[2]);
+                    if (q.getCorrectAnswers().contains("4"))
+                        System.out.println(q.getChoices()[3]);
                 }
                 spacer();
                 ask(); // Next Round
             } else {
                 // Quitting if input is 0
-                System.out.println("Quitting. Your streak was: " + streak);
+                System.out.println("Quitting. Your highscore was: " + highscore);
                 saveToFile();
             }
+        }
+    }
+
+    public Boolean validateInput(Question q, String answer) {
+        if (q.isCorrectAnswer(answer)) {
+            q.decreaseRemaining();
+            if (q.getRemaining() <= 0) {
+                questionList.remove(0);
+            }
+            streak++;
+            if (streak > highscore)
+                highscore = streak;
+            return true;
         } else {
-            System.out.println("Concratulation, you answered each Question correctly three times!");
+
+            streak = 0;
+            return false;
         }
     }
 
@@ -78,32 +99,6 @@ public class Quizmaster {
         }
     }
 
-    /**
-     * Called when the Question is answered correctly
-     */
-    public static void correct(Question q) {
-        q.decreaseRemaining();
-        if (q.getRemaining() <= 0) {
-            questionList.remove(0);
-        }
-        streak++;
-        System.out.println("Correct! Current streak: " + streak);
-    }
-
-    /**
-     * Called when the Question is answered incorrectly
-     * 
-     * @param q | The prior Question
-     */
-    public static void incorrect(Question q) {
-        System.out.println("Not Correct. The correct answer(s) is/are: " + "\n");
-            if (q.getCorrectAnswers().contains("1")) System.out.println(q.getChoices()[0]);
-            if (q.getCorrectAnswers().contains("2")) System.out.println(q.getChoices()[1]);
-            if (q.getCorrectAnswers().contains("3")) System.out.println(q.getChoices()[2]);
-            if (q.getCorrectAnswers().contains("4")) System.out.println(q.getChoices()[3]);
-        streak = 0;
-    }
-
     public void saveToFile() {
         String fileContent = "";
         for (Question q : questionList) {
@@ -114,10 +109,20 @@ public class Quizmaster {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Questions.txt"));
             bufferedWriter.write(fileContent);
             bufferedWriter.close();
-
-            System.out.println("Content saved to file");
         } catch (IOException e) {
             System.err.println("Error while saving content to file");
+        }
+    }
+
+    public Question getRandomQuestion() {
+        // Checking if the questionList contains something
+        if (!questionList.isEmpty()) {
+            // Drawing random question from the questionList
+            Collections.shuffle(questionList);
+            return questionList.get(0);
+        } else {
+            System.out.println("Concratulation, you answered each Question correctly three times!");
+            return null;
         }
     }
 }

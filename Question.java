@@ -15,7 +15,7 @@ public class Question {
      * the only correct answer and j is the remaining counter
      * 
      * @param input | formatted question-answer combo
-     * @param line | corresponding Line from source file
+     * @param line  | corresponding Line from source file
      */
     public Question(String[] input, int line) {
         try {
@@ -48,10 +48,17 @@ public class Question {
      * @return | Bool if User Input matches the correct answer index
      */
     public Boolean isCorrectAnswer(String userInput) {
-        if (correctAnswers.contains(userInput))
-            return true;
-        else
+        if (correctAnswers.contains(userInput)) {
+            if (userInput.length() < 1) {
+                // handling empty input
+                return false;
+            } else {
+                return true;
+            }
+
+        } else {
             return false;
+        }
     }
 
     /**
@@ -86,42 +93,47 @@ public class Question {
      * 
      * @return number of remaining successful tries
      */
-    public int getRemaining () {
+    public int getRemaining() {
         return remaining;
     }
 
     /**
      * Method to shuffle the order of the choices
      */
-    // INFO: Disabled shuffling for now to finalize support for multiple correct answers
-    /*public void shuffleChoices() {
-        // Storing the correct choice temporarily
-        String corr = choices[correctAnswers - 1];
-        Random random = new Random();
-
-        // Shuffling
-        for (int i = choices.length - 1; i > 0; i--) {
-            int j = random.nextInt(i + 1);
-
-            String temp = choices[i];
-            choices[i] = choices[j];
-            choices[j] = temp;
-        }
-
-        // Searching for the correct answer and updating the correctAnswer int
-        for (int i = 0; i < choices.length; i++) {
-            if (choices[i].equals(corr)) {
-                correctAnswers = i + 1;
-            }
-        }
-    }*/
+    // INFO: Disabled shuffling for now to finalize support for multiple correct
+    // answers
+    /*
+     * public void shuffleChoices() {
+     * // Storing the correct choice temporarily
+     * String corr = choices[correctAnswers - 1];
+     * Random random = new Random();
+     * 
+     * // Shuffling
+     * for (int i = choices.length - 1; i > 0; i--) {
+     * int j = random.nextInt(i + 1);
+     * 
+     * String temp = choices[i];
+     * choices[i] = choices[j];
+     * choices[j] = temp;
+     * }
+     * 
+     * // Searching for the correct answer and updating the correctAnswer int
+     * for (int i = 0; i < choices.length; i++) {
+     * if (choices[i].equals(corr)) {
+     * correctAnswers = i + 1;
+     * }
+     * }
+     * }
+     */
 
     /**
      * Returns a String to save a Question to File in the format
      * Q : A1 : A2 : A3 : A4 : i : j
+     * 
      * @return
      */
-    public String prepareForSave(){
-        return question + " : " + choices[0] + " : " + choices[1] + " : "+ choices[2] + " : "+ choices[3] + " : " + correctAnswers + " : " + Integer.toString(remaining);
+    public String prepareForSave() {
+        return question + " : " + choices[0] + " : " + choices[1] + " : " + choices[2] + " : " + choices[3] + " : "
+                + correctAnswers + " : " + Integer.toString(remaining);
     }
 }
