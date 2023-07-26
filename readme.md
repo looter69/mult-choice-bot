@@ -13,7 +13,7 @@ For each Question-Answer-Combo:
 
 Q = Question
 A1-A4 = Possible responses (One of which is correct)
-i = Index of the correct response (1-4)
+i = Indices of the correct response (1-4)
 j = How many times a Question has to be answered correctly before it's removed from the List
 
 ```
@@ -26,18 +26,20 @@ Save your Question list as ```Questions.txt```!
 
 ## Example 
 ```
-Who created this program? : Option 1 : github.com/looter69 : Another Option : Bill Gates : 2 : 3
+Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gates : 23 : 3
 ```
 
 # Changelog
+## V1.1 | Support for multiple correct answers
+- Now more than one answer can be correct
+
 ## V1 | Initial Release
 - Reading and Writing from ```Questions.txt``` file
 - Questions are no longer asked after being correctly answered three times in the past
 
 # Roadmap
-- Actually allow for MULTIPLE correct choices 🙄
 - Graphical User Interface
 - Support for multiple languages
 - Settings File for more customization
 
-###### Version 1 | by Firefly | github.com/looter69
+###### Version 1.1 | by Firefly | github.com/looter69

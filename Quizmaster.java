@@ -34,7 +34,7 @@ public class Quizmaster {
             Question q = questionList.get(0);
 
             // Randomizing order of choices
-            q.shuffleChoices();
+            // q.shuffleChoices();
 
             // Posing Question and giving options
             System.out.println(q.getQuestion());
@@ -44,10 +44,10 @@ public class Quizmaster {
             }
 
             // Awaiting answer
-            int answer = scanner.nextInt();
+            String answer = scanner.nextLine();
 
             // Handling input
-            if (answer != 0) {
+            if (!answer.equals("0")) {
                 if (q.isCorrectAnswer(answer)) {
                     correct(q);
                 } else {
@@ -92,7 +92,11 @@ public class Quizmaster {
      * @param q | The prior Question
      */
     public static void incorrect(Question q) {
-        System.out.println("Not Correct. The correct answer is: " + q.getChoices()[q.getCorrectAnswer() - 1]);
+        System.out.println("Not Correct. The correct answer(s) is/are: " + "\n");
+            if (q.getCorrectAnswers().contains("1")) System.out.println(q.getChoices()[0]);
+            if (q.getCorrectAnswers().contains("2")) System.out.println(q.getChoices()[1]);
+            if (q.getCorrectAnswers().contains("3")) System.out.println(q.getChoices()[2]);
+            if (q.getCorrectAnswers().contains("4")) System.out.println(q.getChoices()[3]);
         streak = 0;
     }
 

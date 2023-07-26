@@ -1,11 +1,9 @@
-import java.util.Random;
-
 /**
  * Data Structure to store Questions, Choices and correct answer
  */
 public class Question {
     private String question;
-    private int correctAnswer;
+    private String correctAnswers;
     private String[] choices;
     private int remaining;
 
@@ -24,7 +22,7 @@ public class Question {
             choices = new String[4];
             question = input[0];
             remaining = Integer.parseInt(input[6].strip());
-            correctAnswer = Integer.parseInt(input[5].strip());
+            correctAnswers = input[5].strip();
             for (int i = 1; i < 5; i++) {
                 choices[i - 1] = input[i].strip();
             }
@@ -46,11 +44,11 @@ public class Question {
     /**
      * Checks if the User's input is correct
      * 
-     * @param index | User Input
+     * @param userInput | User Input
      * @return | Bool if User Input matches the correct answer index
      */
-    public Boolean isCorrectAnswer(int index) {
-        if (index == correctAnswer)
+    public Boolean isCorrectAnswer(String userInput) {
+        if (correctAnswers.contains(userInput))
             return true;
         else
             return false;
@@ -66,12 +64,12 @@ public class Question {
     }
 
     /**
-     * Getter for the Index of the correct answer
+     * Getter for the String that contains the correct answer(s)
      * 
      * @return | Index of the correct answer
      */
-    public int getCorrectAnswer() {
-        return correctAnswer;
+    public String getCorrectAnswers() {
+        return correctAnswers;
     }
 
     /**
@@ -95,9 +93,10 @@ public class Question {
     /**
      * Method to shuffle the order of the choices
      */
-    public void shuffleChoices() {
+    // INFO: Disabled shuffling for now to finalize support for multiple correct answers
+    /*public void shuffleChoices() {
         // Storing the correct choice temporarily
-        String corr = choices[correctAnswer - 1];
+        String corr = choices[correctAnswers - 1];
         Random random = new Random();
 
         // Shuffling
@@ -112,10 +111,10 @@ public class Question {
         // Searching for the correct answer and updating the correctAnswer int
         for (int i = 0; i < choices.length; i++) {
             if (choices[i].equals(corr)) {
-                correctAnswer = i + 1;
+                correctAnswers = i + 1;
             }
         }
-    }
+    }*/
 
     /**
      * Returns a String to save a Question to File in the format
@@ -123,6 +122,6 @@ public class Question {
      * @return
      */
     public String prepareForSave(){
-        return question + " : " + choices[0] + " : " + choices[1] + " : "+ choices[2] + " : "+ choices[3] + " : " + Integer.toString(correctAnswer) + " : " + Integer.toString(remaining);
+        return question + " : " + choices[0] + " : " + choices[1] + " : "+ choices[2] + " : "+ choices[3] + " : " + correctAnswers + " : " + Integer.toString(remaining);
     }
 }
