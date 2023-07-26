@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class Quizmaster {
     private static int streak = 0;
-    private ArrayList<Question> questionList; // Pot of all Questions
+    private static ArrayList<Question> questionList; // Pot of all Questions
     private Scanner scanner = new Scanner(System.in);
 
     /**
@@ -24,35 +24,40 @@ public class Quizmaster {
      * Method that poses a random question and checks the user's answer
      */
     public void ask() {
-        // Drawing random question from the questionList
-        Collections.shuffle(questionList);
-        Question q = questionList.get(0);
+        // Checking if the questionList contains something
+        if (!questionList.isEmpty()) {
+            // Drawing random question from the questionList
+            Collections.shuffle(questionList);
+            Question q = questionList.get(0);
 
-        // Randomizing order of choices
-        q.shuffleChoices();
+            // Randomizing order of choices
+            q.shuffleChoices();
 
-        // Posing Question and giving options
-        System.out.println(q.getQuestion());
-        System.out.println("Please give the correct Answer (1|2|3|4) | '0' quits the program.");
-        for (int i = 0; i < q.getChoices().length; i++) {
-            System.out.println((i + 1) + " | " + q.getChoices()[i]);
-        }
-
-        // Awaiting answer
-        int answer = scanner.nextInt();
-
-        // Handling input
-        if (answer != 0) {
-            if (q.isCorrectAnswer(answer)) {
-                correct();
-            } else {
-                incorrect(q);
+            // Posing Question and giving options
+            System.out.println(q.getQuestion());
+            System.out.println("Please give the correct Answer (1|2|3|4) | '0' quits the program.");
+            for (int i = 0; i < q.getChoices().length; i++) {
+                System.out.println((i + 1) + " | " + q.getChoices()[i]);
             }
-            spacer();
-            ask(); // Next Round
+
+            // Awaiting answer
+            int answer = scanner.nextInt();
+
+            // Handling input
+            if (answer != 0) {
+                if (q.isCorrectAnswer(answer)) {
+                    correct(q);
+                } else {
+                    incorrect(q);
+                }
+                spacer();
+                ask(); // Next Round
+            } else {
+                // Quitting if input is 0
+                System.out.println("Quitting. Your streak was: " + streak);
+            }
         }else{
-            // Quitting if input is 0
-            System.out.println("Quitting. Your streak was: " + streak);
+            System.out.println("Concratulation, you answered each Question correctly three times!");
         }
     }
 
@@ -68,13 +73,17 @@ public class Quizmaster {
     /**
      * Called when the Question is answered correctly
      */
-    public static void correct() {
+    public static void correct(Question q) {
+        q.decreaseRemaining();
+        if (q.getRemaining() <= 0) {
+            questionList.remove(0);
+        }
         streak++;
         System.out.println("Correct! Current streak: " + streak);
     }
 
     /**
-     * Called when the Question is answered incorrectly 
+     * Called when the Question is answered incorrectly
      * 
      * @param q | The prior Question
      */

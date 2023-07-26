@@ -7,6 +7,7 @@ public class Question {
     private String question;
     private int correctAnswer;
     private String[] choices;
+    private int remaining;
 
     /**
      * Constructor for the Question.
@@ -17,10 +18,11 @@ public class Question {
      * 
      * @param input | formatted question-answer combo
      */
-    public Question(String[] input, int line) {
+    public Question(String[] input, int line, int newRemaining) {
         try {
             choices = new String[4];
             question = input[0];
+            remaining = newRemaining;
             correctAnswer = Integer.parseInt(input[5].strip());
             for (int i = 1; i < 5; i++) {
                 choices[i - 1] = input[i].strip();
@@ -69,6 +71,24 @@ public class Question {
      */
     public int getCorrectAnswer() {
         return correctAnswer;
+    }
+
+    /**
+     * Decreases the remaining value until it reaches 0
+     */
+    public void decreaseRemaining() {
+        remaining--;
+        if (remaining < 0)
+            remaining = 0;
+    }
+
+    /**
+     * Getter of the number of remaining correct answers
+     * 
+     * @return number of remaining successful tries
+     */
+    public int getRemaining () {
+        return remaining;
     }
 
     /**

@@ -1,5 +1,5 @@
 # Multiple Choice Bot
-by Firefly | Github.com/Looter69
+by Firefly | github.com/Looter69
 ## Features
 1. Read custom List of Questions
 2. Picking Question at Random
@@ -18,5 +18,5 @@ Save your Question list in ```.txt``` format
 
 ## Example 
 ```
-Who created this program? : God : ChatGPT : Github.com/looter69 : Bill Gates : 3 
+Who created this program? : A : ChatGPT : github.com/looter69 : Bill Gates : 3 
 ```
