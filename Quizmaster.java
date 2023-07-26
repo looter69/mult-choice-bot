@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -55,8 +58,9 @@ public class Quizmaster {
             } else {
                 // Quitting if input is 0
                 System.out.println("Quitting. Your streak was: " + streak);
+                saveToFile();
             }
-        }else{
+        } else {
             System.out.println("Concratulation, you answered each Question correctly three times!");
         }
     }
@@ -90,5 +94,22 @@ public class Quizmaster {
     public static void incorrect(Question q) {
         System.out.println("Not Correct. The correct answer is: " + q.getChoices()[q.getCorrectAnswer() - 1]);
         streak = 0;
+    }
+
+    public void saveToFile() {
+        String fileContent = "";
+        for (Question q : questionList) {
+            fileContent += q.prepareForSave() + "\n";
+        }
+
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("Questions.txt"));
+            bufferedWriter.write(fileContent);
+            bufferedWriter.close();
+
+            System.out.println("Content saved to file");
+        } catch (IOException e) {
+            System.err.println("Error while saving content to file");
+        }
     }
 }

@@ -12,9 +12,9 @@ public class Question {
     /**
      * Constructor for the Question.
      * Takes an Array of format
-     * "Q : A1 : A2 : A3 : A4 : i"
-     * where: Q is the Question, A1-A4 are possible choices and i is the index of
-     * the only correct answer
+     * "Q : A1 : A2 : A3 : A4 : i : j"
+     * where: Q is the Question, A1-A4 are possible choices, i is the index of
+     * the only correct answer and j is the remaining counter
      * 
      * @param input | formatted question-answer combo
      */
@@ -114,5 +114,14 @@ public class Question {
                 correctAnswer = i + 1;
             }
         }
+    }
+
+    /**
+     * Returns a String to save a Question to File in the format
+     * Q : A1 : A2 : A3 : A4 : i : j
+     * @return
+     */
+    public String prepareForSave(){
+        return question + " : " + choices[0] + " : " + choices[1] + " : "+ choices[2] + " : "+ choices[3] + " : " + Integer.toString(correctAnswer) + " : " + Integer.toString(remaining);
     }
 }
