@@ -20,7 +20,7 @@ public class Main {
             // Populating list
             while (sc.hasNextLine()) {
                 String[] input = sc.nextLine().split(":");
-                questionList.add(new Question(input, line, 3));
+                questionList.add(new Question(input, line));
                 line++;
             }
             sc.close();

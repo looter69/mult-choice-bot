@@ -17,12 +17,13 @@ public class Question {
      * the only correct answer and j is the remaining counter
      * 
      * @param input | formatted question-answer combo
+     * @param line | corresponding Line from source file
      */
-    public Question(String[] input, int line, int newRemaining) {
+    public Question(String[] input, int line) {
         try {
             choices = new String[4];
             question = input[0];
-            remaining = newRemaining;
+            remaining = Integer.parseInt(input[6].strip());
             correctAnswer = Integer.parseInt(input[5].strip());
             for (int i = 1; i < 5; i++) {
                 choices[i - 1] = input[i].strip();
