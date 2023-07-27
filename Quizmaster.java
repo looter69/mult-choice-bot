@@ -13,16 +13,20 @@ public class Quizmaster {
     private static int highscore = 0;
     private static ArrayList<Question> questionList; // Pot of all Questions
     private Scanner scanner = new Scanner(System.in);
+    private LanguageModule lm;
+    private Language lang;
 
     /**
      * Constructor for the Quizmaster class
      * 
      * @param questions | List of all Questions
      */
-    public Quizmaster(ArrayList<Question> questions, Boolean gui) {
+    public Quizmaster(ArrayList<Question> questions, Boolean gui, LanguageModule newLm, Language newlang) {
         questionList = questions;
+        lm = newLm;
+        lang = newlang;
         if (gui) {
-            new View(this);
+            new View(this, lm, lang);
         } else {
             ask();
         }
@@ -40,7 +44,7 @@ public class Quizmaster {
 
             // Posing Question and giving options
             System.out.println(q.getQuestion());
-            System.out.println("Please give the correct Answer (1|2|3|4) | '0' quits the program.");
+            System.out.println(lm.askChoice);
             for (int i = 0; i < q.getChoices().length; i++) {
                 System.out.println((i + 1) + " | " + q.getChoices()[i]);
             }
@@ -51,9 +55,9 @@ public class Quizmaster {
             // Handling input
             if (!answer.equals("0")) {
                 if (validateInput(q, answer)) {
-                    System.out.println("Correct! Current streak: " + streak);
+                    System.out.println(lm.correct + streak);
                 } else {
-                    System.out.println("Not Correct. The correct answer(s) is/are: " + "\n");
+                    System.out.println(lm.incorrect + "\n");
                     if (q.getCorrectAnswers().contains("1"))
                         System.out.println(q.getChoices()[0]);
                     if (q.getCorrectAnswers().contains("2"))
@@ -67,7 +71,7 @@ public class Quizmaster {
                 ask(); // Next Round
             } else {
                 // Quitting if input is 0
-                System.out.println("Quitting. Your highscore was: " + highscore);
+                System.out.println(lm.quitting + highscore);
                 saveToFile();
             }
         }
@@ -110,7 +114,7 @@ public class Quizmaster {
             bufferedWriter.write(fileContent);
             bufferedWriter.close();
         } catch (IOException e) {
-            System.err.println("Error while saving content to file");
+            System.err.println(lm.errorSaveFile);
         }
     }
 
@@ -121,7 +125,7 @@ public class Quizmaster {
             Collections.shuffle(questionList);
             return questionList.get(0);
         } else {
-            System.out.println("Concratulation, you answered each Question correctly three times!");
+            System.out.println(lm.success);
             return null;
         }
     }

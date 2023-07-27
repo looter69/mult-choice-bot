@@ -12,11 +12,16 @@ public class View {
     private JTextArea questionArea, infoArea;
     private JTextArea[] choiceTexts = new JTextArea[4];
     private JButton buttons[] = new JButton[4];
-    private JButton saveButton;
+    private JButton saveButton, langButton;
     private Question currentQuestion;
     private Quizmaster qm;
+    private LanguageModule lm;
+    private Language lang;
 
-    public View(Quizmaster q) {
+    public View(Quizmaster q, LanguageModule newLm, Language newLang) {
+        lm = newLm;
+        lang = newLang;
+
         /* Frame Setup */
         qm = q;
         frame = new JFrame("Multiple Choice Bot");
@@ -38,11 +43,11 @@ public class View {
         answerPanel.setBackground(new Color(250, 250, 250));
 
         /* TextArea Setup */
-        questionArea = new JTextArea("Loading");
-        questionArea.setBounds(10, 70, 560, 140);
+        questionArea = new JTextArea();
+        questionArea.setBounds(10, 70, 500, 140);
         questionPanel.add(applyStyling(questionArea));
 
-        infoArea = new JTextArea("Info will be displayed here");
+        infoArea = new JTextArea(lm.infoAreaText);
         infoArea.setBounds(10, 10, 500, 50);
         questionPanel.add(applyStyling(infoArea));
 
@@ -70,6 +75,19 @@ public class View {
         saveButton.setBounds(520, 10, 50, 50);
         saveButton.addActionListener(e -> quit());
         questionPanel.add(applyStyling(saveButton));
+
+        langButton = new JButton();
+        switch (lang) {
+            case ENGLISH:
+                langButton.setText("🇩🇪");
+                break;
+            default:
+                langButton.setText("🇬🇧");
+                break;
+        }
+        langButton.setBounds(520, 70, 50, 50);
+        langButton.addActionListener(e -> updateLanguage());
+        questionPanel.add(applyStyling(langButton));
 
         /* Finalization */
         frame.add(questionPanel);
@@ -101,10 +119,11 @@ public class View {
         Boolean result = qm.validateInput(currentQuestion, answer);
         if (result) {
             infoArea.setText(
-                    "✅ Correct ✅" + "\n" + "Streak: " + qm.getStreak() + "\n" + "Highscore: " + qm.getHighscore());
+                    lm.responseCorrect1 + "\n" + lm.responseCorrect2 + qm.getStreak() + "\n" + lm.responseCorrect3
+                            + qm.getHighscore());
         } else {
             // Presenting correct answer(s)
-            String message = "❌" + " Wrong. The correct answer(s) is/was: " + "❌" + "\n";
+            String message = lm.responseIncorrect + "\n";
             if (q.getCorrectAnswers().contains("1"))
                 message += (q.getChoices()[0]) + "\n";
             if (q.getCorrectAnswers().contains("2"))
@@ -133,7 +152,7 @@ public class View {
      * @return | styled Button
      */
     private JButton applyStyling(JButton b) {
-        if (!b.getText().equals("💾")) {
+        if (!"💾🇬🇧🇩🇪".contains(b.getText())) {
             b.setFont(new Font("Arial", Font.PLAIN, 14));
         }
         b.setBackground(new Color(51, 153, 255));
@@ -150,13 +169,35 @@ public class View {
      * @return | styled TextArea
      */
     private JTextArea applyStyling(JTextArea ta) {
+        if (!ta.getText().equals(lm.infoAreaText)) {
+            ta.setFont(new Font("Arial", Font.PLAIN, 14));
+        } else {
+            ta.setFont(new Font("Arial", Font.PLAIN, 12));
+        }
         ta.setEditable(false);
-        ta.setFont(new Font("Arial", Font.PLAIN, 14));
         ta.setBackground(Color.white); // White background
         ta.setForeground(Color.black); // Black text color
         ta.setBorder(new LineBorder(new Color(51, 153, 255), 2)); // Light blue border
         ta.setLineWrap(true);
         ta.setWrapStyleWord(true);
         return ta;
+    }
+
+    /**
+     * Changing the Program's language
+     */
+    private void updateLanguage() {
+        if (lang == Language.ENGLISH) {
+            lang = Language.GERMAN;
+            infoArea.setText("Sprache geändert");
+            langButton.setText("🇬🇧");
+        } else {
+            if (lang == Language.GERMAN) {
+                lang = Language.ENGLISH;
+                infoArea.setText("Language changed");
+                langButton.setText("🇩🇪");
+            }
+        }
+        lm.update(lang);
     }
 }

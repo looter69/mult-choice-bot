@@ -9,8 +9,11 @@ import java.util.Scanner;
 public class Main {
     static ArrayList<Question> questionList = new ArrayList<Question>(); // Storing all Questions here
     private static Boolean useGui = true;
+    private static LanguageModule lm;
 
     public static void main(String[] args) {
+        Language lang = Language.ENGLISH;
+        lm = new LanguageModule(lang);
         try {
             // Reading Questions from File
             Scanner sc = new Scanner(new File("Questions.txt"));
@@ -25,14 +28,14 @@ public class Main {
                 if (0 != Integer.parseInt(input[6].strip())) {
                     questionList.add(new Question(input, line));
                 }else{
-                    System.out.println("Skipped Question in line " + line + " because it has been answered correctly enough times already!");
+                    System.out.println(lm.debugReadFile1 + line + lm.debugReadFile2);
                 }
                 line++;
             }
             sc.close();
-            new Quizmaster(questionList, useGui); // Starting
+            new Quizmaster(questionList, useGui, lm, lang); // Starting
         } catch (FileNotFoundException e) {
-            System.err.println("Error loading File!");
+            System.err.println(lm.errorReadFile);
         }
     }
 }

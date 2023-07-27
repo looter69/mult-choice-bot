@@ -29,6 +29,10 @@ Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gate
 ```
 
 # Changelog
+## V1.3 | German Translation
+- German translation now available.
+- Language of the GUI can be changed via the new Language Button.
+
 ## V1.2 | Stylized GUI
 - GUIs are displayed by default. If you prefer using the Terminal, change the ```useGui```-flag in the ```Main.java``` file.
 - Progress is only saved when you hit the ```SAVE```-Button. Hitting the ```X``` on the Window won't save the progress.
@@ -44,4 +48,4 @@ Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gate
 - Support for multiple languages
 - Settings File for more customization
 
-###### Version 1.2 | by Firefly | github.com/looter69
+###### Version 1.3 | by Firefly | github.com/looter69 | CC BY-NC-SA
