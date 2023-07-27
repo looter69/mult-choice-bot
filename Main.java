@@ -21,7 +21,12 @@ public class Main {
             // Populating list
             while (sc.hasNextLine()) {
                 String[] input = sc.nextLine().split(":");
-                questionList.add(new Question(input, line));
+                // Checking if question has more than 0 correct guesses remaining
+                if (0 != Integer.parseInt(input[6].strip())) {
+                    questionList.add(new Question(input, line));
+                }else{
+                    System.out.println("Skipped Question in line " + line + " because it has been answered correctly enough times already!");
+                }
                 line++;
             }
             sc.close();

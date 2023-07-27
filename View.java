@@ -1,6 +1,5 @@
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -9,7 +8,7 @@ public class View {
     private JPanel questionPanel, answerPanel;
     private JTextField questionField, infoField;
     private JButton buttons[] = new JButton[4];
-    private JButton quitButton;
+    private JButton saveButton;
     private Question currentQuestion;
     private Quizmaster qm;
 
@@ -47,10 +46,10 @@ public class View {
             answerPanel.add(buttons[i]);
         }
 
-        quitButton = new JButton("❌");
-        quitButton.setBounds(530, 0, 50, 50);
-        quitButton.addActionListener(e -> quit());
-        questionPanel.add(quitButton);
+        saveButton = new JButton("💾");
+        saveButton.setBounds(530, 0, 50, 50);
+        saveButton.addActionListener(e -> quit());
+        questionPanel.add(saveButton);
 
         buttons[0].addActionListener(e -> validateInput("1"));
         buttons[1].addActionListener(e -> validateInput("2"));

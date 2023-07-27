@@ -133,7 +133,7 @@ public class Question {
      * @return
      */
     public String prepareForSave() {
-        return question + " : " + choices[0] + " : " + choices[1] + " : " + choices[2] + " : " + choices[3] + " : "
+        return question.strip() + " : " + choices[0] + " : " + choices[1] + " : " + choices[2] + " : " + choices[3] + " : "
                 + correctAnswers + " : " + Integer.toString(remaining);
     }
 }
