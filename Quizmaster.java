@@ -125,4 +125,22 @@ public class Quizmaster {
             return null;
         }
     }
+
+    /**
+     * Getter for the current streak
+     * 
+     * @return | current streak
+     */
+    public int getStreak() {
+        return streak;
+    }
+
+    /**
+     * Getter for the current highscore
+     * 
+     * @return | current highscore
+     */
+    public int getHighscore() {
+        return highscore;
+    }
 }
