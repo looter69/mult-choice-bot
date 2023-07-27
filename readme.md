@@ -29,6 +29,9 @@ Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gate
 ```
 
 # Changelog
+## V1.3.1 | Minor QOL-Update
+- Save Button no longer quits the Program
+
 ## V1.3 | German Translation
 - German translation now available.
 - Language of the GUI can be changed via the new Language Button.
@@ -47,4 +50,4 @@ Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gate
 # Roadmap
 - Settings File for more customization
 
-###### Version 1.3 | by Firefly | github.com/looter69 | CC BY-NC-SA
+###### Version 1.3.1 | by Firefly | github.com/looter69 | CC BY-NC-SA

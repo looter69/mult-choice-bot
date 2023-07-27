@@ -141,7 +141,6 @@ public class View {
      * Quitting the program
      */
     public void quit() {
-        frame.dispose();
         qm.saveToFile();
     }
 
