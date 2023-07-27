@@ -12,7 +12,7 @@ For each Question-Answer-Combo:
 [Q] : [A1] : [A2] : [A3] : [A4] : i : j
 
 Q = Question
-A1-A4 = Possible responses (One of which is correct)
+A1-A4 = Possible responses (1-4 of which are correct)
 i = Indices of the correct response (1-4)
 j = How many times a Question has to be answered correctly before it's removed from the List
 
@@ -45,7 +45,6 @@ Who created this program? : Option 1 : github.com/looter69 : Firefly : Bill Gate
 - Questions are no longer asked after being correctly answered three times in the past
 
 # Roadmap
-- Support for multiple languages
 - Settings File for more customization
 
 ###### Version 1.3 | by Firefly | github.com/looter69 | CC BY-NC-SA
